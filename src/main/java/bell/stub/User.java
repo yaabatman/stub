@@ -1,11 +1,12 @@
 package bell.stub;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class User {
-    String login;
-    String password;
-    Date date;
+    private String login;
+    private String password;
+    private LocalDate date;
 
     public User(String login, String password) {
         this.login = login;
@@ -28,11 +29,11 @@ public class User {
         this.password = password;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 }
