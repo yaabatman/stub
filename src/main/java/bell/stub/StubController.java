@@ -9,7 +9,6 @@ import java.time.LocalDate;
 
 
 @RestController
-@RequestMapping
 public class StubController {
 
     @GetMapping("/stub_get")
