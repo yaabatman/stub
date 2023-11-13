@@ -8,7 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
+
 
 @RestController
 public class StubController {
@@ -16,8 +19,7 @@ public class StubController {
     @GetMapping("/stub_get")
     public ResponseEntity<?> EndpointGet() {
         String login = "user1";
-        Connection connection = bdConnection.getConnection();
-        User user = bdConnection.selectUserByLogin(connection, login);
+        User user = bdConnection.selectUserByLogin(login);
         if (user == null) {
             return new ResponseEntity<>(new SQLException(), HttpStatusCode.valueOf(500));
         }
@@ -29,7 +31,10 @@ public class StubController {
         if (user.getLogin().isEmpty() || user.getPassword().isEmpty()) {
             return new ResponseEntity<>(new SQLException(), HttpStatusCode.valueOf(400));
         }
-        int rows = bdConnection.insertUser(bdConnection.getConnection(), user);
+        String email = user.getLogin() + "@mail.com";
+        user.setDate(Date.valueOf(LocalDate.now()));
+        user.setEmail(email);
+        int rows = bdConnection.insertUser(user);
         return new ResponseEntity<>(rows, HttpStatus.OK);
     }
 }
