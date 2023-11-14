@@ -50,10 +50,8 @@ public class bdConnection {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            return res;
         }
-
+        return res;
     }
 
 }
