@@ -1,9 +1,10 @@
-package bell.stub.models;
+package bell.stub.database;
+
+import bell.stub.models.User;
 
 import java.sql.*;
 
-
-public class bdConnection {
+public class BdConnection {
 
     private static final String DB_URL = "jdbc:postgresql://192.168.1.135:5432/postgres";
     private static final String DB_USER = "myuser";
@@ -32,27 +33,25 @@ public class bdConnection {
     }
 
     public static int insertUser(User user) {
-        String queryTable1 = "INSERT INTO table1 (login, password, date) VALUES (?, ?, ?)";
-        String queryTable2 = "INSERT INTO table2 (login, email) VALUES (?, ?)";
+        String query = "INSERT INTO table1 (login, password, date) VALUES (?, ?, ?); INSERT INTO table2 (login, email) VALUES (?, ?)";
         int res = 0;
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-            PreparedStatement preparedStatement = connection.prepareStatement(queryTable1);
-            preparedStatement.setString(1, user.getLogin());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setDate(3, new java.sql.Date(user.getDate().getTime()));
-            res += preparedStatement.executeUpdate();
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, user.getLogin());
+                preparedStatement.setString(2, user.getPassword());
+                preparedStatement.setDate(3, new java.sql.Date(user.getDate().getTime()));
+                preparedStatement.setString(4, user.getLogin());
+                preparedStatement.setString(5, user.getEmail());
 
-            preparedStatement = connection.prepareStatement(queryTable2);
-            preparedStatement.setString(1, user.getLogin());
-            preparedStatement.setString(2, user.getEmail());
-            res += preparedStatement.executeUpdate();
-
+                res += preparedStatement.executeUpdate();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return res;
     }
+
 
 }
 

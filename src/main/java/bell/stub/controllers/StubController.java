@@ -1,7 +1,7 @@
 package bell.stub.controllers;
 
 import bell.stub.models.User;
-import bell.stub.models.bdConnection;
+import bell.stub.database.BdConnection;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class StubController {
     @GetMapping("/stub_get")
     public ResponseEntity<?> EndpointGet() {
         String login = "user1";
-        User user = bdConnection.selectUserByLogin(login);
+        User user = BdConnection.selectUserByLogin(login);
         if (user == null) {
             return new ResponseEntity<>(new SQLException(), HttpStatusCode.valueOf(500));
         }
@@ -33,10 +33,10 @@ public class StubController {
         if (user.getLogin().isEmpty() || user.getPassword().isEmpty()) {
             return new ResponseEntity<>(new SQLException(), HttpStatusCode.valueOf(400));
         }
-        String email = user.getLogin() + "@mail.com";
+        String email = user.getLogin() + "@gmail.com";
         user.setDate(Date.valueOf(LocalDate.now()));
         user.setEmail(email);
-        int rows = bdConnection.insertUser(user);
+        int rows = BdConnection.insertUser(user);
         return new ResponseEntity<>(rows, HttpStatus.OK);
     }
 }
