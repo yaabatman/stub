@@ -3,7 +3,6 @@ package bell.stub.controllers;
 import bell.stub.models.User;
 import bell.stub.database.BdConnection;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
