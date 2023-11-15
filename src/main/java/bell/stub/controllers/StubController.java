@@ -20,7 +20,7 @@ public class StubController {
 
     @GetMapping("/stub_get")
     public ResponseEntity<?> EndpointGet() {
-        String login = "user1";
+        String login = "E.Novichkov";
         User user = BdConnection.selectUserByLogin(login);
         if (user == null) {
             return new ResponseEntity<>(new SQLException(), HttpStatusCode.valueOf(500));
