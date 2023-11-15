@@ -16,11 +16,11 @@ import java.time.LocalDate;
 public class StubController {
 
     @GetMapping("/stub_get")
-    public ResponseEntity<?> EndpointGet(@RequestParam String login) {
+    public ResponseEntity<?> EndpointGet(@RequestParam(value = "login") String login) {
 
         User user = BdConnection.selectUserByLogin(login);
         if (user == null) {
-            return new ResponseEntity<>(new SQLException(), HttpStatusCode.valueOf(500));
+            return new ResponseEntity<>(new SQLException(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -28,7 +28,7 @@ public class StubController {
     @PostMapping("/stub_post")
     public ResponseEntity<?> EndpointPost(@RequestBody User user) {
         if (user.getLogin().isEmpty() || user.getPassword().isEmpty()) {
-            return new ResponseEntity<>(new SQLException(), HttpStatusCode.valueOf(400));
+            return new ResponseEntity<>(new SQLException(), HttpStatus.BAD_REQUEST);
         }
         String email = user.getLogin() + "@gmail.com";
         user.setDate(Date.valueOf(LocalDate.now()));
