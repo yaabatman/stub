@@ -5,10 +5,7 @@ import bell.stub.database.BdConnection;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -19,8 +16,8 @@ import java.time.LocalDate;
 public class StubController {
 
     @GetMapping("/stub_get")
-    public ResponseEntity<?> EndpointGet() {
-        String login = "E.Novichkov";
+    public ResponseEntity<?> EndpointGet(@RequestParam String login) {
+
         User user = BdConnection.selectUserByLogin(login);
         if (user == null) {
             return new ResponseEntity<>(new SQLException(), HttpStatusCode.valueOf(500));
