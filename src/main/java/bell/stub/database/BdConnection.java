@@ -16,16 +16,16 @@ public class BdConnection {
             String query = "SELECT * FROM table1 t1 JOIN table2 t2 ON t1.login = t2.login WHERE t1.login LIKE (?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setString(1, selectLogin);
-
-                ResultSet resultSet = preparedStatement.getResultSet();
-                if (resultSet.next()) {
-                    String login = resultSet.getString("login");
-                    String password = resultSet.getString("password");
-                    java.sql.Date date = resultSet.getDate("date");
-                    String email = resultSet.getString("email");
-                    user = new User(login, password, date, email);
+                if (preparedStatement.execute()) {
+                    ResultSet resultSet = preparedStatement.getResultSet();
+                    if (resultSet.next()) {
+                        String login = resultSet.getString("login");
+                        String password = resultSet.getString("password");
+                        java.sql.Date date = resultSet.getDate("date");
+                        String email = resultSet.getString("email");
+                        user = new User(login, password, date, email);
+                    }
                 }
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
