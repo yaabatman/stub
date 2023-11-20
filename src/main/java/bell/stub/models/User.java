@@ -47,6 +47,10 @@ public class User {
         this.email = email;
     }
 
+    public String toCSVstring() {
+        return String.join(",", login, password, date.toString(), email);
+    }
+
     @Override
     public String toString() {
         return "User{" +

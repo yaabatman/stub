@@ -1,7 +1,9 @@
 package bell.stub.controllers;
 
-import bell.stub.models.User;
 import bell.stub.database.BdConnection;
+import bell.stub.files.ReadFromFile;
+import bell.stub.files.WriteToFile;
+import bell.stub.models.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,8 @@ public class StubController {
         if (user == null) {
             return new ResponseEntity<>(new SQLException(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        WriteToFile.writeToChosenFile(user);
+
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -29,10 +33,19 @@ public class StubController {
         if (user.getLogin().isEmpty() || user.getPassword().isEmpty()) {
             return new ResponseEntity<>(new SQLException(), HttpStatus.BAD_REQUEST);
         }
-        String email = user.getLogin() + "@gmail.com";
         user.setDate(Date.valueOf(LocalDate.now()));
-        user.setEmail(email);
         int rows = BdConnection.insertUser(user);
         return new ResponseEntity<>(rows, HttpStatus.OK);
+    }
+
+    @GetMapping("/stub_read_line")
+    public ResponseEntity<?> EndpointGet() {
+
+        String randomReadLine = ReadFromFile.readFromFile();
+        if (randomReadLine == null) {
+            return new ResponseEntity<>(new SQLException(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return new ResponseEntity<>(randomReadLine, HttpStatus.OK);
     }
 }
