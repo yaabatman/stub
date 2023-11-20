@@ -1,3 +1,7 @@
 login,password,date,email
 user1,password1,2023-10-30,user1@example.com
 user2,password2,2023-10-30,user2@example.com
+user3,password3,2023-10-30,user3@example.com
+user4,password4,2023-10-30,user4@example.com
+user5,password5,2023-10-30,user5@example.com
+user6,password6,2023-11-20,user6@ya.ru

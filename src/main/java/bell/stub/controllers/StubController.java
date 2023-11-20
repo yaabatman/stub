@@ -39,7 +39,7 @@ public class StubController {
     }
 
     @GetMapping("/stub_read_line")
-    public ResponseEntity<?> EndpointGet() {
+    public ResponseEntity<?> EndpointGetRandomLine() {
 
         String randomReadLine = ReadFromFile.readFromFile();
         if (randomReadLine == null) {

@@ -20,7 +20,7 @@ public class ReadFromFile {
             long fileSize = randomAccessFile.length();
 
             Random random = new Random();
-            long randomPosition = random.nextLong(randomAccessFile.length()) % fileSize;
+            long randomPosition = random.nextLong() % fileSize;
             randomPosition = Math.abs(randomPosition);
 
             randomAccessFile.seek(randomPosition);
